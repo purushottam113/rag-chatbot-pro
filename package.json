@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@huggingface/inference": "^4.5.3",
     "@langchain/community": "^0.3.49",
     "@langchain/core": "^0.3.66",
     "@langchain/pinecone": "^0.2.0",
@@ -16,7 +17,8 @@
     "next": "15.4.4",
     "pdf-parse": "^1.1.1",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "remixicon": "^4.6.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

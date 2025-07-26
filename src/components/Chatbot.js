@@ -28,7 +28,7 @@ export default function Chatbot (){
 
     const fetchReply = async ()=>{
         try {
-            const res = await fetch("api/query", {
+            const res = await fetch("api/chat", {
                 method: "POST",
                 headers:{
                     "content-Type": "application/json"
@@ -49,7 +49,7 @@ export default function Chatbot (){
     }
 
     return(
-        <div className="flex flex-col h-full p-2 mx-auto rounded-xl">
+        <div className="flex flex-col h-full p-2 mx-auto border-l-8 border-l-black bg-blue-300">
             <div className="flex-1 overflow-y-auto space-y-4mb-2">
             {chats.map((chat, index)=> (
                 chat.sender === "bot"?
