@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# RAG Chatbot Assignment
 
-## Getting Started
+This is a simple chatbot project I built using the **RAG (Retrieval-Augmented Generation)** approach. The goal of this project is to answer user queries based on the content of a PDF file they upload.
 
-First, run the development server:
+Once the PDF is uploaded, the app extracts the text, stores its embeddings in **Pinecone**, and then uses an LLM (**Gemini** ) to give smart and relevant answers based on the content of that PDF.
 
-```bash
+---
+
+## 🔧 Tech Used
+
+- **Next.js App Router** (frontend + backend)
+- **Tailwind CSS** for styling
+- **LangChain** (for loading PDF and splitting it into chunks)
+- **Hugging Face embeddings**
+- **Pinecone** (for storing and retrieving vector embeddings)
+- **Gemini** for generating responses
+
+---
+
+## 💻 How It Works
+
+1. User uploads a PDF.
+2. The PDF is parsed using LangChain's `PDFLoader`.
+3. Text is split into chunks and converted into embeddings using Hugging Face.
+4. These embeddings are stored in Pinecone.
+5. When a user types a question, relevant chunks are fetched from Pinecone.
+6. These chunks + the user's question are sent to the LLM (Gemini).
+7. The LLM replies with an answer based only on the context of the uploaded PDF.
+
+---
+
+## 🗂️ Folder Structure
+
+/app
+/api
+└── upload (PDF upload + processing)
+└── chat (Handles questions to LLM)
+/components
+└── Chatbot.js
+└── fileupload.js
+└── Navbar.js
+/utils
+└── vectorStore.js (PDF text extraction)
+
+---
+
+## 📦 How to Run
+
+npm install
+
+
+Add a .env.local file in the root folder:
+
+PINECONE_API_KEY=your_key
+PINECONE_ENVIRONMENT=your_env
+PINECONE_INDEX=your_index_name
+
+HUGGINGFACE_API_KEY=your_token
+GOOGLE_API_KEY=your_gemini_key
+
+Start the dev server:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
