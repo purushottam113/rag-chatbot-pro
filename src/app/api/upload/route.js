@@ -1,8 +1,10 @@
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
-import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
+import { getVectorStore } from "@/utils/vectorStore";
+import { Document } from "@langchain/core/documents";
 
 export async function POST(req){
     try {
@@ -20,6 +22,7 @@ export async function POST(req){
         const buffer = Buffer.from(bytes);
         const filePath = path.join(uploadsDir, file.name);
         await writeFile(filePath, buffer);
+    
 
         const loader = new PDFLoader(filePath);
         const docs = await loader.load();
@@ -33,7 +36,17 @@ export async function POST(req){
 
         const texts = await textSplitter.splitText(combinedText);
 
-        return NextResponse.json({message: texts})
+        const DocumentedTexts = [
+            new Document({
+            pageContent: texts,
+            metadata: { source: "file.pdf" } // Optional
+            }),
+        ];
+
+        const vectorStore = await getVectorStore();
+        await vectorStore.addDocuments(DocumentedTexts);
+
+        return NextResponse.json({message: "File Upload Successfully"})
 
     } catch (error) {
         NextResponse.json({error: "Server Issue"}, {status: 500})

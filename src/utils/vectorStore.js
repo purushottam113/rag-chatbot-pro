@@ -22,9 +22,9 @@ export const getVectorStore = async () => {
       embeddings,
       {
       pineconeIndex,
-      maxConcurrency: 5,                    
-      });
+      maxConcurrency: 10 ,                    
+    });
 
-      return vectorStore;
+    return vectorStore;
 
 }
