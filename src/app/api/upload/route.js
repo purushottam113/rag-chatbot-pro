@@ -49,6 +49,7 @@ export async function POST(req){
         return NextResponse.json({message: "File Upload Successfully"})
 
     } catch (error) {
-        NextResponse.json({error: "Server Issue"}, {status: 500})
+        console.error("Upload error:", error);
+        return NextResponse.json({error: "Server Issue"}, {status: 500})
     }
 }
