@@ -20,11 +20,10 @@ export async function POST(req){
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
-        const filePath = path.join(uploadsDir, file.name);
-        await writeFile(filePath, buffer);
-    
-
-        const loader = new PDFLoader(filePath);
+        
+        const loader = new PDFLoader(buffer, {
+          splitPages: false,
+        });
         const docs = await loader.load();
 
         const combinedText = docs.map(doc => doc.pageContent).join("\n");
